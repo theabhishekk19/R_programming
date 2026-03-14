@@ -1,0 +1,13 @@
+my_list <- list(
+  name = "Tinku",
+  age = 20,
+  marks = c(85,90,88)
+)
+
+print(my_list)
+
+print(my_list$name)
+
+my_list$city <- "Gurgaon"
+
+print(my_list)
