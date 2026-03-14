@@ -1,0 +1,14 @@
+data <- data.frame(
+  Name=c("A","B","C"),
+  Marks=c(70,80,90)
+)
+
+new_row <- data.frame(Name="D",Marks=85)
+
+data <- rbind(data,new_row)
+
+print(data)
+
+data$Grade <- c("C","B","A","B")
+
+print(data)
