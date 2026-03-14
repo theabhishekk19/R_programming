@@ -1,0 +1,13 @@
+df1 <- data.frame(
+  ID=c(1,2,3),
+  Name=c("A","B","C")
+)
+
+df2 <- data.frame(
+  ID=c(1,2,3),
+  Marks=c(80,90,85)
+)
+
+merged_data <- merge(df1,df2,by="ID")
+
+print(merged_data)
