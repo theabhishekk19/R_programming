@@ -1,0 +1,9 @@
+data <- matrix(1:9,nrow=3)
+
+print(apply(data,1,sum))
+
+list_data <- list(a=1:5,b=6:10)
+
+print(lapply(list_data,sum))
+
+print(sapply(list_data,sum))
