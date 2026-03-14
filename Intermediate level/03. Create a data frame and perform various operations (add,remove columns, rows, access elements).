@@ -1,0 +1,13 @@
+students <- data.frame(
+  Name=c("Aman","Rahul","Riya"),
+  Age=c(20,21,19),
+  Marks=c(80,75,90)
+)
+
+print(students)
+
+students$City <- c("Delhi","Mumbai","Pune")
+
+students$Age <- NULL
+
+print(students[1,2])
