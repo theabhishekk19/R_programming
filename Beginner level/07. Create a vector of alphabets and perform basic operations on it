@@ -1,0 +1,3 @@
+letters_vec <- letters
+
+print(letters_vec)
