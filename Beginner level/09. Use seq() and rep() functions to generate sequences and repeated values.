@@ -1,0 +1,8 @@
+# Sequence
+seq1 <- seq(1,10)
+
+# Repeat
+rep1 <- rep(5, times=4)
+
+print(seq1)
+print(rep1)
