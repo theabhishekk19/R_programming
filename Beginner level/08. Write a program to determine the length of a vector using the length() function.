@@ -1,0 +1,5 @@
+v <- c(2,4,6,8,10)
+
+len <- length(v)
+
+print(len)
