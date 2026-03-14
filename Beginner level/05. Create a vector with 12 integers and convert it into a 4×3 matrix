@@ -1,0 +1,5 @@
+vec <- c(1:12)
+
+mat <- matrix(vec, nrow=4, ncol=3)
+
+print(mat)
