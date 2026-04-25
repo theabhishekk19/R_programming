@@ -1,0 +1,162 @@
+# Exploratory Data Analysis of Big Mart Train Dataset
+
+# Install packages if not installed
+# install.packages("ggplot2")
+# install.packages("dplyr")
+
+library(ggplot2)
+library(dplyr)
+
+# Load dataset
+data <- read.csv("Train.csv", stringsAsFactors = FALSE)
+
+# 1. Basic Information
+cat("First 6 Rows:\n")
+print(head(data))
+
+cat("\nDataset Structure:\n")
+str(data)
+
+cat("\nNumber of Rows and Columns:\n")
+print(dim(data))
+
+cat("\nColumn Names:\n")
+print(colnames(data))
+
+cat("\nSummary of Dataset:\n")
+print(summary(data))
+
+# 2. Check Missing Values
+cat("\nMissing Values in Each Column:\n")
+print(colSums(is.na(data)))
+
+# 3. Check Duplicate Rows
+cat("\nTotal Duplicate Rows:\n")
+print(sum(duplicated(data)))
+
+# 4. Data Types
+cat("\nData Types of Columns:\n")
+print(sapply(data, class))
+
+# 5. Missing Value Treatment
+
+# Item_Weight missing values replace with mean
+data$Item_Weight[is.na(data$Item_Weight)] <- mean(data$Item_Weight, na.rm = TRUE)
+
+# Outlet_Size missing values replace with mode
+mode_value <- names(sort(table(data$Outlet_Size), decreasing = TRUE))[1]
+data$Outlet_Size[is.na(data$Outlet_Size)] <- mode_value
+
+cat("\nMissing Values After Treatment:\n")
+print(colSums(is.na(data)))
+
+# 6. Numerical Columns
+numeric_cols <- names(data)[sapply(data, is.numeric)]
+cat("\nNumerical Columns:\n")
+print(numeric_cols)
+
+# 7. Categorical Columns
+categorical_cols <- names(data)[sapply(data, is.character)]
+cat("\nCategorical Columns:\n")
+print(categorical_cols)
+
+# 8. Univariate Analysis - Item Outlet Sales
+ggplot(data, aes(x = Item_Outlet_Sales)) +
+  geom_histogram(bins = 30, fill = "skyblue", color = "black") +
+  ggtitle("Distribution of Item Outlet Sales") +
+  xlab("Item Outlet Sales") +
+  ylab("Frequency")
+
+# 9. Item MRP Distribution
+ggplot(data, aes(x = Item_MRP)) +
+  geom_histogram(bins = 30, fill = "lightgreen", color = "black") +
+  ggtitle("Distribution of Item MRP") +
+  xlab("Item MRP") +
+  ylab("Frequency")
+
+# 10. Item Fat Content Count
+ggplot(data, aes(x = Item_Fat_Content)) +
+  geom_bar(fill = "orange", color = "black") +
+  ggtitle("Item Fat Content Count") +
+  xlab("Item Fat Content") +
+  ylab("Count")
+
+# 11. Outlet Type Count
+ggplot(data, aes(x = Outlet_Type)) +
+  geom_bar(fill = "purple") +
+  ggtitle("Outlet Type Count") +
+  xlab("Outlet Type") +
+  ylab("Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# 12. Item Type Count
+ggplot(data, aes(x = Item_Type)) +
+  geom_bar(fill = "lightblue") +
+  ggtitle("Item Type Count") +
+  xlab("Item Type") +
+  ylab("Count") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# 13. Sales by Outlet Type
+ggplot(data, aes(x = Outlet_Type, y = Item_Outlet_Sales)) +
+  geom_boxplot(fill = "lightpink") +
+  ggtitle("Sales by Outlet Type") +
+  xlab("Outlet Type") +
+  ylab("Item Outlet Sales") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# 14. Sales by Outlet Size
+ggplot(data, aes(x = Outlet_Size, y = Item_Outlet_Sales)) +
+  geom_boxplot(fill = "lightyellow") +
+  ggtitle("Sales by Outlet Size") +
+  xlab("Outlet Size") +
+  ylab("Item Outlet Sales")
+
+# 15. Item MRP vs Item Outlet Sales
+ggplot(data, aes(x = Item_MRP, y = Item_Outlet_Sales)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  ggtitle("Item MRP vs Item Outlet Sales") +
+  xlab("Item MRP") +
+  ylab("Item Outlet Sales")
+
+# 16. Item Weight vs Sales
+ggplot(data, aes(x = Item_Weight, y = Item_Outlet_Sales)) +
+  geom_point(color = "red", alpha = 0.5) +
+  ggtitle("Item Weight vs Item Outlet Sales") +
+  xlab("Item Weight") +
+  ylab("Item Outlet Sales")
+
+# 17. Average Sales by Item Type
+avg_sales_item <- data %>%
+  group_by(Item_Type) %>%
+  summarise(Average_Sales = mean(Item_Outlet_Sales))
+
+print(avg_sales_item)
+
+ggplot(avg_sales_item, aes(x = Item_Type, y = Average_Sales)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  ggtitle("Average Sales by Item Type") +
+  xlab("Item Type") +
+  ylab("Average Sales") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# 18. Average Sales by Outlet Type
+avg_sales_outlet <- data %>%
+  group_by(Outlet_Type) %>%
+  summarise(Average_Sales = mean(Item_Outlet_Sales))
+
+print(avg_sales_outlet)
+
+ggplot(avg_sales_outlet, aes(x = Outlet_Type, y = Average_Sales)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  ggtitle("Average Sales by Outlet Type") +
+  xlab("Outlet Type") +
+  ylab("Average Sales") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# 19. Correlation between numerical variables
+cat("\nCorrelation Matrix:\n")
+print(cor(data[numeric_cols], use = "complete.obs"))
+
+# 20. Final Message
+cat("\nEDA Completed Successfully!\n")
