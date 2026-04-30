@@ -1,6 +1,6 @@
 my_list <- list(
-  name = "Tinku",
-  age = 20,
+  name = "Abhishek Gupta",
+  age = 22,
   marks = c(85,90,88)
 )
 
