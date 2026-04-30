@@ -1,6 +1,6 @@
 students <- data.frame(
-  Name=c("Aman","Rahul","Riya"),
-  Age=c(20,21,19),
+  Name=c("Abhishek","Tinku","Nishtha"),
+  Age=c(22,21,22),
   Marks=c(80,75,90)
 )
 
